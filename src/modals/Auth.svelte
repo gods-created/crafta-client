@@ -9,7 +9,7 @@
 
     let phonenumber = '+380';
     let code = '';
-    let loading = false;
+    let loading = $state(false);
 
     const auth_process = async (phonenumber, code=null) => {
         loading = true;

@@ -16,4 +16,4 @@ jobs:
           port: ${{ secrets.PORT }}
           password: ${{ secrets.PASSWORD }}
           script: |
-            sudo docker service update --image {{ secrets.IMAGE }} {{ secrets.CLIENT_SERVICE }} 
+            sudo docker service update --image ${{ secrets.IMAGE }} ${{ secrets.CLIENT_SERVICE }} 

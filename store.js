@@ -13,4 +13,4 @@ export const alert_msg = writable('Somethon went wrong. Try it again');
 
 export const user_info = writable(null);
 
-export const top_games = writable([]);
+export const top_games = writable(null);

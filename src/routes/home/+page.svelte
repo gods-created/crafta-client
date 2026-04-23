@@ -11,13 +11,23 @@
     let trimmedRows = $state([]);
 
     const games_list_process = async () => {
-        const { err_description, games } = await games_list(10, 'likes');
-        if (err_description) {
-            edit_alert_state(true, 'danger', err_description);
-            return;
+        const now = Date.now();
+
+        if ($top_games) {
+            if (now - $top_games['updated_at'] > 30000) {
+                top_games.set(null);
+            }
         }
 
-        top_games.set(games);
+        if (!$top_games) {
+            const { err_description, games } = await games_list(10, 'likes');
+            if (err_description) {
+                edit_alert_state(true, 'danger', err_description);
+                return;
+            }
+
+            top_games.set({ games, updated_at: now});
+        }
     }
 
     onMount(async () => {
@@ -33,7 +43,7 @@
     <title>Crafta: Home</title>
 </svelte:head>
 
-{#if $top_games.length == 0}
+{#if !$top_games || $top_games.games.length == 0}
 <span class="fs-4 fw-bold">
     No one game didn't find
 </span>
@@ -57,7 +67,7 @@
                                         on:click={ (e) => { game_description_block_state(game.id, e.currentTarget) } }
                                     >More</button> 
                                     <button type="button" class="btn btn-sm btn-outline-secondary" 
-                                        on:click={ show_game(game.id) }
+                                        on:click={ () => { show_game(game.id) } }
                                     >Play</button> 
                                 </div> 
                                 <small class="text-body-secondary my-2">Likes: <span class="text-decoration-underline">{ game.likes }</span></small>
@@ -67,6 +77,6 @@
                 </div>
             {/each}
         </div>
-        <Pagination rows={$top_games} perPage={4} bind:trimmedRows={trimmedRows} />
+        <Pagination rows={$top_games.games} perPage={4} bind:trimmedRows={trimmedRows} />
     {/if}
 {/if}

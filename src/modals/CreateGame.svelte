@@ -9,7 +9,7 @@
     let description = '';
     let user_id = $user_info.id;
     let token = Cookies.get('token');
-    let loading = false;
+    let loading = $state(false);
 
     const create_game_process = async (short_description, description, user_id, token) => {
       loading = true;
