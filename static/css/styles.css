@@ -1,0 +1,21 @@
+body, html {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+    margin: auto;
+}
+
+* {
+    font-family: "Old Standard TT", serif !important;
+}
+
+textarea {
+    resize: none !important;
+}

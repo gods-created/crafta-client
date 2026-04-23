@@ -1,0 +1,19 @@
+name: CICD
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Update image
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          port: ${{ secrets.PORT }}
+          password: ${{ secrets.PASSWORD }}
+          script: |
+            sudo docker service update --image {{ secrets.IMAGE }} {{ secrets.CLIENT_SERVICE }} 
